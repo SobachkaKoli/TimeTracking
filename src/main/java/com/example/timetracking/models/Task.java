@@ -1,10 +1,11 @@
-package com.example.timetracking.model;
+package com.example.timetracking.models;
 
+import com.example.timetracking.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 
-import java.util.Date;
+import java.time.Duration;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -20,7 +21,8 @@ public class Task {
     private Long id;
     private String taskName;
     private String description;
-    private String status;
-    private Date start;
-    private Date finish;
+    private Status status;
+    private Instant start;
+    private Instant finish;
+    private Duration duration;
 }
