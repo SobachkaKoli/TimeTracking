@@ -1,4 +1,4 @@
-package com.example.timetracking.enums;
+package com.example.timetracking.model.enums;
 
 public enum Status {
     CREATED,

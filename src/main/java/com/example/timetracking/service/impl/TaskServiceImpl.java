@@ -1,13 +1,13 @@
 package com.example.timetracking.service.impl;
 
-import com.example.timetracking.enums.Status;
+import com.example.timetracking.model.enums.Status;
 import com.example.timetracking.exception.CreateTaskException;
 import com.example.timetracking.exception.TaskNotFoundException;
 import com.example.timetracking.exception.SchedulerException;
 import com.example.timetracking.exception.StartStopException;
 import com.example.timetracking.exception.UpdateTaskException;
 import com.example.timetracking.model.Task;
-import com.example.timetracking.dto.TaskDTO;
+import com.example.timetracking.model.dto.TaskDTO;
 import com.example.timetracking.repository.TaskRepository;
 import com.example.timetracking.service.TaskService;
 import lombok.RequiredArgsConstructor;

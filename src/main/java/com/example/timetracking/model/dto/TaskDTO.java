@@ -1,4 +1,4 @@
-package com.example.timetracking.dto;
+package com.example.timetracking.model.dto;
 
 import java.time.Instant;
 

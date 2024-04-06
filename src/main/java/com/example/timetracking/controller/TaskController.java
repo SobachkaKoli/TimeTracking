@@ -1,7 +1,7 @@
 package com.example.timetracking.controller;
 
 import com.example.timetracking.model.Task;
-import com.example.timetracking.dto.TaskDTO;
+import com.example.timetracking.model.dto.TaskDTO;
 import com.example.timetracking.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

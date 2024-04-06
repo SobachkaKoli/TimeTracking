@@ -1,6 +1,6 @@
 package com.example.timetracking.model;
 
-import com.example.timetracking.enums.Status;
+import com.example.timetracking.model.enums.Status;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
