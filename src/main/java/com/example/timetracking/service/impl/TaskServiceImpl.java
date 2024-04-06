@@ -37,10 +37,9 @@ public class TaskServiceImpl implements TaskService {
      * @throws CreateTaskException If an error occurs while creating the task.
      */
     @Override
-    @Transactional
     public Task createTask(TaskDTO taskDTO) {
         try {
-            log.info("Created new task: {}");
+            log.info("Created new task");
             return taskRepository.save(
                     Task.builder()
                             .taskName(taskDTO.taskName())
@@ -75,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
         currentTask.setStart(taskDTO.start() != null ? taskDTO.start() : currentTask.getStart());
         currentTask.setFinish(taskDTO.finish() != null ? taskDTO.finish() : currentTask.getFinish());
         try {
-            return taskRepository.save(currentTask);
+            return currentTask;
         } catch (Exception e) {
             log.error("Error updating task", e);
             throw new UpdateTaskException("Error updating task");
@@ -92,13 +91,12 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public void startTask(Long id) {
+        try {
         Task task = taskRepository.findById(id).orElseThrow(
                 () -> new TaskNotFoundException("Task by id " + id + " not found!"));
         task.setStart(Instant.now());
-        log.info("The time is now {}", dateFormat.format(new Date()));
         task.setStatus(Status.IN_PROGRESS);
-        try {
-            taskRepository.save(task);
+        log.info("The time is now {}", dateFormat.format(new Date()));
         } catch (Exception e) {
             log.error("Error stopping task", e);
             throw new StartStopException("Unexpected error stopping task");
@@ -115,14 +113,14 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public void stopTask(Long id) {
+        try {
         log.info("Stopping task with id: {}", id);
         Task task = taskRepository.findById(id).orElseThrow(
                 () -> new TaskNotFoundException("Task by id " + id + " not found!"));
         task.setFinish(Instant.now());
         task.setStatus(Status.CLOSE);
         task.setDuration(Duration.between(task.getStart(), task.getFinish()));
-        try {
-            taskRepository.save(task);
+        log.info("The time is now {}", dateFormat.format(new Date()));
         } catch (Exception e) {
             log.error("Error stopping task", e);
             throw new StartStopException("Unexpected error stopping task");
@@ -144,6 +142,7 @@ public class TaskServiceImpl implements TaskService {
                     .stream()
                     .peek(task -> task.setStatus(Status.CLOSE))
                     .forEach(taskRepository::save);
+            log.info("The time is now {}", dateFormat.format(new Date()));
         } catch (Exception e) {
             log.error("Failed to close tasks", e);
             throw new SchedulerException("Error losing tasks");
