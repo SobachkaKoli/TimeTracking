@@ -7,7 +7,7 @@ import com.example.timetracking.exception.SchedulerException;
 import com.example.timetracking.exception.StartStopException;
 import com.example.timetracking.exception.UpdateTaskException;
 import com.example.timetracking.model.Task;
-import com.example.timetracking.records.TaskDTO;
+import com.example.timetracking.dto.TaskDTO;
 import com.example.timetracking.repository.TaskRepository;
 import com.example.timetracking.service.TaskService;
 import lombok.RequiredArgsConstructor;

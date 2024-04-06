@@ -1,4 +1,4 @@
-package com.example.timetracking.records;
+package com.example.timetracking.dto;
 
 import java.time.Instant;
 

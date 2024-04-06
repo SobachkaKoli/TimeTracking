@@ -3,7 +3,7 @@ package com.example.timetracking.service.impl;
 import com.example.timetracking.enums.Status;
 import com.example.timetracking.exception.*;
 import com.example.timetracking.model.Task;
-import com.example.timetracking.records.TaskDTO;
+import com.example.timetracking.dto.TaskDTO;
 import com.example.timetracking.repository.TaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
