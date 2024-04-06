@@ -66,8 +66,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public Task updateTask(Long id, TaskDTO taskDTO) {
         log.info("Updating task with id: {}", id);
-        Task currentTask = taskRepository.findById(id).orElseThrow(
-                () -> new TaskNotFoundException("Task by id " + id + " not found!"));
+        Task currentTask = findTask(id);
 
         currentTask.setTaskName(taskDTO.taskName() != null ? taskDTO.taskName() : currentTask.getTaskName());
         currentTask.setDescription(taskDTO.description() != null ? taskDTO.description() : currentTask.getDescription());
@@ -92,11 +91,10 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public void startTask(Long id) {
         try {
-        Task task = taskRepository.findById(id).orElseThrow(
-                () -> new TaskNotFoundException("Task by id " + id + " not found!"));
-        task.setStart(Instant.now());
-        task.setStatus(Status.IN_PROGRESS);
-        log.info("The time is now {}", dateFormat.format(new Date()));
+            Task task = findTask(id);
+            task.setStart(Instant.now());
+            task.setStatus(Status.IN_PROGRESS);
+            log.info("The time is now {}", dateFormat.format(new Date()));
         } catch (Exception e) {
             log.error("Error stopping task", e);
             throw new StartStopException("Unexpected error stopping task");
@@ -114,13 +112,12 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public void stopTask(Long id) {
         try {
-        log.info("Stopping task with id: {}", id);
-        Task task = taskRepository.findById(id).orElseThrow(
-                () -> new TaskNotFoundException("Task by id " + id + " not found!"));
-        task.setFinish(Instant.now());
-        task.setStatus(Status.CLOSE);
-        task.setDuration(Duration.between(task.getStart(), task.getFinish()));
-        log.info("The time is now {}", dateFormat.format(new Date()));
+            log.info("Stopping task with id: {}", id);
+            Task task = findTask(id);
+            task.setFinish(Instant.now());
+            task.setStatus(Status.CLOSE);
+            task.setDuration(Duration.between(task.getStart(), task.getFinish()));
+            log.info("The time is now {}", dateFormat.format(new Date()));
         } catch (Exception e) {
             log.error("Error stopping task", e);
             throw new StartStopException("Unexpected error stopping task");
@@ -147,5 +144,10 @@ public class TaskServiceImpl implements TaskService {
             log.error("Failed to close tasks", e);
             throw new SchedulerException("Error losing tasks");
         }
+    }
+
+    private Task findTask(Long id) {
+        return taskRepository.findById(id).orElseThrow(
+                () -> new TaskNotFoundException("Task by id " + id + " not found!"));
     }
 }
