@@ -7,7 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-
+/**
+ * Handles exceptions thrown by controllers.
+ * - Logs custom exceptions (CustomException) with info level.
+ * - Logs unexpected exceptions with error level.
+ * - Returns ApiError objects with request details and error info.
+ */
 @ControllerAdvice
 @Slf4j
 public class ExceptionControllerAdvice {

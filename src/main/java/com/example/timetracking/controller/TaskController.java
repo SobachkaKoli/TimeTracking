@@ -8,7 +8,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -46,6 +52,7 @@ public class TaskController {
         taskService.startTask(id);
         return ResponseEntity.ok().build();
     }
+
     @Operation(summary = "Stop task", description = "Stop the timer and show the duration")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Task start successfully"),

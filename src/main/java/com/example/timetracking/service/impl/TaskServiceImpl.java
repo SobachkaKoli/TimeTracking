@@ -40,18 +40,18 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public Task createTask(TaskDTO taskDTO) {
         try {
+            log.info("Created new task: {}");
             return taskRepository.save(
                     Task.builder()
                             .taskName(taskDTO.taskName())
                             .description(taskDTO.description())
                             .status(Status.CREATED)
                             .build());
+
         } catch (Exception e) {
             log.error("Error create task", e);
             throw new CreateTaskException("Error create task");
-
         }
-
     }
 
     /**
@@ -149,6 +149,4 @@ public class TaskServiceImpl implements TaskService {
             throw new SchedulerException("Error losing tasks");
         }
     }
-
-
 }
