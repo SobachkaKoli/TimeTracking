@@ -1,6 +1,6 @@
 package com.example.timetracking.service;
 
-import com.example.timetracking.models.Task;
+import com.example.timetracking.model.Task;
 import com.example.timetracking.records.TaskDTO;
 
 public interface TaskService {

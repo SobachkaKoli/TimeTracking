@@ -1,4 +1,4 @@
-package com.example.timetracking.exceptions;
+package com.example.timetracking.exception;
 
 import org.springframework.http.HttpStatus;
 

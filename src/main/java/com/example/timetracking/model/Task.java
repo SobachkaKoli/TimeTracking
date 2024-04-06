@@ -1,4 +1,4 @@
-package com.example.timetracking.models;
+package com.example.timetracking.model;
 
 import com.example.timetracking.enums.Status;
 import jakarta.persistence.*;

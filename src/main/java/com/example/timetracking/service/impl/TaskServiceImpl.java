@@ -1,8 +1,12 @@
 package com.example.timetracking.service.impl;
 
 import com.example.timetracking.enums.Status;
-import com.example.timetracking.exceptions.*;
-import com.example.timetracking.models.Task;
+import com.example.timetracking.exception.CreateTaskException;
+import com.example.timetracking.exception.TaskNotFoundException;
+import com.example.timetracking.exception.SchedulerException;
+import com.example.timetracking.exception.StartStopException;
+import com.example.timetracking.exception.UpdateTaskException;
+import com.example.timetracking.model.Task;
 import com.example.timetracking.records.TaskDTO;
 import com.example.timetracking.repository.TaskRepository;
 import com.example.timetracking.service.TaskService;
@@ -25,6 +29,13 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
+    /**
+     * Creates a new task based on the provided TaskDTO object.
+     *
+     * @param taskDTO Data Transfer Object containing task details (name, description).
+     * @return The created Task object.
+     * @throws CreateTaskException If an error occurs while creating the task.
+     */
     @Override
     @Transactional
     public Task createTask(TaskDTO taskDTO) {
@@ -43,6 +54,15 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    /**
+     * Updates an existing task with the specified ID, using data from the provided TaskDTO object.
+     *
+     * @param id      The ID of the task to update.
+     * @param taskDTO Data Transfer Object containing updated task details.
+     * @return The updated Task object.
+     * @throws TaskNotFoundException If a task with the specified ID is not found.
+     * @throws UpdateTaskException   If an error occurs while updating the task.
+     */
     @Override
     @Transactional
     public Task updateTask(Long id, TaskDTO taskDTO) {
@@ -62,6 +82,13 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    /**
+     * Starts a task with the specified ID, setting its status to IN_PROGRESS and start time to the current time.
+     *
+     * @param id The ID of the task to start.
+     * @throws TaskNotFoundException If a task with the specified ID is not found.
+     * @throws StartStopException    If an error occurs while starting the task.
+     */
     @Override
     @Transactional
     public void startTask(Long id) {
@@ -78,6 +105,13 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    /**
+     * Stops a task with the specified ID, setting its status to CLOSE, finish time to the current time, and calculating its duration.
+     *
+     * @param id The ID of the task to stop.
+     * @throws TaskNotFoundException If a task with the specified ID is not found.
+     * @throws StartStopException    If an error occurs while stopping the task.
+     */
     @Override
     @Transactional
     public void stopTask(Long id) {
@@ -95,6 +129,11 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    /**
+     * Automatically closes all tasks with the IN_PROGRESS status, scheduled to run daily at 23:59.
+     *
+     * @throws SchedulerException If an error occurs during the scheduled task execution.
+     */
     @Override
     @Transactional
     @Scheduled(cron = "0 59 23 * * *")
