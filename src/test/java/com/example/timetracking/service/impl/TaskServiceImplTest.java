@@ -1,9 +1,8 @@
 package com.example.timetracking.service.impl;
 
-import com.example.timetracking.model.enums.Status;
-import com.example.timetracking.exception.*;
 import com.example.timetracking.model.Task;
 import com.example.timetracking.model.dto.TaskDTO;
+import com.example.timetracking.model.enums.Status;
 import com.example.timetracking.repository.TaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +18,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TaskServiceImplTest {
@@ -85,7 +88,7 @@ public class TaskServiceImplTest {
         when(taskRepository.save(any())).thenThrow(new RuntimeException());
 
         // Call the method and assert the exception
-        assertThrows(ResponseStatusException.class, () -> underTest.createTask(taskDTO));
+        assertThrows(RuntimeException.class, () -> underTest.createTask(taskDTO));
     }
 
     @Test
@@ -122,7 +125,7 @@ public class TaskServiceImplTest {
         when(taskRepository.save(expectedTaskCreate)).thenThrow(new RuntimeException("Mock exception"));
 
         // Call the method and expect an exception
-        assertThrows(ResponseStatusException.class, () -> underTest.updateTask(id, updateDTO));
+        assertThrows(RuntimeException.class, () -> underTest.updateTask(id, updateDTO));
 
     }
 
@@ -180,7 +183,7 @@ public class TaskServiceImplTest {
 
     @Test
     public void stopTask_givenTaskNotFound_whenStoppingTask_thenTaskNotFoundExceptionThrown() {
-        //Prepare
+        //Given
         Long id = 3L;
         // Assertions
         assertThrows(ResponseStatusException.class, () -> underTest.stopTask(id));

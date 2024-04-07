@@ -82,7 +82,6 @@ public class TaskServiceImpl implements TaskService {
             task.setStatus(Status.IN_PROGRESS);
             taskRepository.save(task);
             log.info("The time is now {}", dateFormat.format(new Date()));
-
     }
 
     /**

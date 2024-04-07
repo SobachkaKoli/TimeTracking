@@ -10,7 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Handles exceptions thrown by controllers.
- * - Logs custom exceptions (CustomException) with info level.
+ * - Logs ResponseStatusException with info level.
  * - Logs unexpected exceptions with error level.
  * - Returns ApiError objects with request details and error info.
  */
@@ -21,9 +21,9 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ApiError> handleException(ResponseStatusException e,
                                                     HttpServletRequest request) {
-        log.info("Handling CustomException: {}", e.getMessage());
+        log.info("Handling ResponseStatusException: {}", e.getMessage());
         ApiError apiError = buildError(request.getRequestURI(), e.getMessage(), e.getStatusCode().value());
-        log.info("Created ApiError for CustomException: {}", apiError);
+        log.info("Created ApiError for ResponseStatusException: {}", apiError);
         return ResponseEntity.status(apiError.statusCode()).body(apiError);
     }
 

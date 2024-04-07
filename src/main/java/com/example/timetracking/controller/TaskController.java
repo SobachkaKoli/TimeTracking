@@ -41,23 +41,23 @@ public class TaskController {
         return ResponseEntity.ok(taskService.updateTask(id, taskDTO));
     }
 
+    @PostMapping("/{id}/start")
     @Operation(summary = "Start task", description = "Start the task timer")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Task start successfully"),
             @ApiResponse(responseCode = "404", description = "Task not found"),
     })
-    @PostMapping("/{id}/start")
     public ResponseEntity<Void> startTask(@PathVariable Long id) {
         taskService.startTask(id);
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/{id}/stop")
     @Operation(summary = "Stop task", description = "Stop the timer and show the duration")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Task start successfully"),
             @ApiResponse(responseCode = "404", description = "Task not found"),
     })
-    @PostMapping("/{id}/stop")
     public ResponseEntity<Void> stopTask(@PathVariable Long id) {
         taskService.stopTask(id);
         return ResponseEntity.ok().build();

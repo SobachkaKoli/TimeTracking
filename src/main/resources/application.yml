@@ -1,9 +1,6 @@
 spring:
   application:
     name: TimeTracking
-  server:
-    servlet:
-      context-path: /api
   datasource:
     url: jdbc:postgresql://localhost:5433/time_tracking
     username: postgres
@@ -16,3 +13,6 @@ spring:
       path: /api-docs
     swagger-ui:
       path: /swagger
+server:
+  servlet:
+    context-path: /api
