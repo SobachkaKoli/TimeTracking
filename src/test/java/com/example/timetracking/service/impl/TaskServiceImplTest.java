@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -84,7 +85,7 @@ public class TaskServiceImplTest {
         when(taskRepository.save(any())).thenThrow(new RuntimeException());
 
         // Call the method and assert the exception
-        assertThrows(CreateTaskException.class, () -> underTest.createTask(taskDTO));
+        assertThrows(ResponseStatusException.class, () -> underTest.createTask(taskDTO));
     }
 
     @Test
@@ -110,7 +111,7 @@ public class TaskServiceImplTest {
         when(taskRepository.findById(id)).thenReturn(Optional.empty());
 
         // Call the method and assert the exception
-        assertThrows(TaskNotFoundException.class, () -> underTest.updateTask(id, updateDTO));
+        assertThrows(ResponseStatusException.class, () -> underTest.updateTask(id, updateDTO));
     }
 
     @Test
@@ -121,7 +122,7 @@ public class TaskServiceImplTest {
         when(taskRepository.save(expectedTaskCreate)).thenThrow(new RuntimeException("Mock exception"));
 
         // Call the method and expect an exception
-        assertThrows(UpdateTaskException.class, () -> underTest.updateTask(id, updateDTO));
+        assertThrows(ResponseStatusException.class, () -> underTest.updateTask(id, updateDTO));
 
     }
 
@@ -148,7 +149,7 @@ public class TaskServiceImplTest {
         when(taskRepository.save(existingTask)).thenThrow(new RuntimeException("Mock exception"));
 
         // Act and Assert
-        assertThrows(StartStopException.class, () -> underTest.startTask(id));
+        assertThrows(RuntimeException.class, () -> underTest.startTask(id));
 
     }
 
@@ -182,7 +183,7 @@ public class TaskServiceImplTest {
         //Prepare
         Long id = 3L;
         // Assertions
-        assertThrows(TaskNotFoundException.class, () -> underTest.stopTask(id));
+        assertThrows(ResponseStatusException.class, () -> underTest.stopTask(id));
     }
 
     @Test
@@ -201,7 +202,7 @@ public class TaskServiceImplTest {
         when(taskRepository.save(existingTask)).thenThrow(new RuntimeException("Mock exception"));
 
         // Act and Assert
-        assertThrows(StartStopException.class, () -> underTest.stopTask(id));
+        assertThrows(RuntimeException.class, () -> underTest.stopTask(id));
 
     }
 
@@ -224,12 +225,12 @@ public class TaskServiceImplTest {
     }
 
     @Test
-    public void givenExceptionWhenClosingTasks_thenThrowSchedulerException() {
+    public void givenExceptionWhenClosingTasks_thenThrowRuntimeException() {
         // Prepare mock behavior
         when(taskRepository.findAllByStatus(Status.IN_PROGRESS)).thenThrow(new RuntimeException("Mock exception"));
 
         // Call the method and expect an exception
-        assertThrows(SchedulerException.class, () -> underTest.closeTasks());
+        assertThrows(RuntimeException.class, () -> underTest.closeTasks());
 
     }
 

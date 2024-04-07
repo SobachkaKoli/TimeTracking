@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Handles exceptions thrown by controllers.
@@ -17,11 +18,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class ExceptionControllerAdvice {
 
-    @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ApiError> handleException(CustomException e,
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ApiError> handleException(ResponseStatusException e,
                                                     HttpServletRequest request) {
         log.info("Handling CustomException: {}", e.getMessage());
-        ApiError apiError = buildError(request.getRequestURI(), e.getMessage(), e.getCode());
+        ApiError apiError = buildError(request.getRequestURI(), e.getMessage(), e.getStatusCode().value());
         log.info("Created ApiError for CustomException: {}", apiError);
         return ResponseEntity.status(apiError.statusCode()).body(apiError);
     }
