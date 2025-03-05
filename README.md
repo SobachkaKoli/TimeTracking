@@ -6,7 +6,6 @@ This project is a **Time Tracking API** built using **Java Spring Boot**. The AP
 ## Features
 - User registration and authentication (JWT-based)
 - CRUD operations for time entries
-- H2 in-memory database
 - Validation and exception handling
 - Swagger API documentation
 
@@ -15,7 +14,7 @@ This project is a **Time Tracking API** built using **Java Spring Boot**. The AP
 - Spring Boot 3
 - Spring Security (JWT Authentication)
 - Spring Data JPA
-- H2 Database
+- PostgreSQL Database
 - Swagger OpenAPI
 - Lombok
 - Maven
@@ -62,16 +61,6 @@ http://localhost:8080
 | POST   | /entries       | Create time entry    |
 | PUT    | /entries/{id}  | Update time entry    |
 | DELETE | /entries/{id}  | Delete time entry    |
-
-## Configuration
-The H2 database console is available at:
-```
-http://localhost:8080/h2-console
-```
-Default database credentials:
-- URL: `jdbc:h2:mem:testdb`
-- Username: `sa`
-- Password: `password`
 
 ## Swagger API Documentation
 Swagger UI is available at:
