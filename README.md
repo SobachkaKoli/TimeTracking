@@ -1,46 +1,87 @@
-# REST API
+# Time Tracking API
 
-### [POST] /api/tasks
+## Project Overview
+This project is a **Time Tracking API** built using **Java Spring Boot**. The API allows users to track time spent on various tasks with CRUD functionality and user authentication.
 
-**Description:** [Creates a new task with the specified parameters]
+## Features
+- User registration and authentication (JWT-based)
+- CRUD operations for time entries
+- H2 in-memory database
+- Validation and exception handling
+- Swagger API documentation
 
-**Inputs:**
+## Technologies Used
+- Java 17
+- Spring Boot 3
+- Spring Security (JWT Authentication)
+- Spring Data JPA
+- H2 Database
+- Swagger OpenAPI
+- Lombok
+- Maven
 
-- [taskName]: [Task name (String)]
-- [description]: [Task description (String)]
+## Installation and Running the Project
 
-**Source Data:** [Saved in the database.]
+### Prerequisites
+- Java 17+
+- Maven
 
-### [PATCH] /api/tasks/{id}
+### Clone the Repository
+```bash
+git clone https://github.com/SobachkaKoli/TimeTracking.git
+cd TimeTracking
+```
 
-**Description:** [Updates an existing task with the specified identifier.]
+### Build the Project
+```bash
+mvn clean install
+```
 
-**Inputs:**
+### Run the Application
+```bash
+mvn spring-boot:run
+```
 
-- [taskName]: [New task name.]
-- [description]: [New task description.]
-- [description]: [New task start date.]
-- [description]: [New task finish date.]
+The application will be available at:
+```
+http://localhost:8080
+```
 
-**Source Data:** [Saved in the database.]
+## API Endpoints
 
-### [POST] /api/tasks/{id}/start
+### Authentication
+| Method | Endpoint        | Description        |
+|--------|----------------|-------------------|
+| POST   | /auth/register | Register new user |
+| POST   | /auth/login    | Authenticate user |
 
-**Description:** [Starts the execution of the task with the specified identifier.]
+### Time Tracking
+| Method | Endpoint        | Description        |
+|--------|----------------|-------------------|
+| GET    | /entries       | Get all time entries |
+| POST   | /entries       | Create time entry    |
+| PUT    | /entries/{id}  | Update time entry    |
+| DELETE | /entries/{id}  | Delete time entry    |
 
-**Inputs:**
+## Configuration
+The H2 database console is available at:
+```
+http://localhost:8080/h2-console
+```
+Default database credentials:
+- URL: `jdbc:h2:mem:testdb`
+- Username: `sa`
+- Password: `password`
 
-- [None]
+## Swagger API Documentation
+Swagger UI is available at:
+```
+http://localhost:8080/swagger-ui/index.html
+```
 
-**Source Data:** [Saved in the database.]
+## Author
+[Vladyslav Sydiuk](https://github.com/SobachkaKoli)
 
-### [POST] /api/tasks/{id}/stop
-
-**Description:** [Stops the execution of the task with the specified identifier.]
-
-**Inputs:**
-
-- [None]
-
-**Source Data:** [Saved in the database.]
+## License
+This project is licensed under the MIT License.
 
